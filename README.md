@@ -1,4 +1,5 @@
 # Run
+First follow the steps below to setup the codebase. Then to plot two flights:
 ```bash
 ./app/serve.py -f /path_to_first_log -f2 /path_to_second_log
 ```

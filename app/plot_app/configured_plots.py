@@ -98,17 +98,6 @@ def generate_plots(ulog, ulog2, px4_ulog, px4_ulog2, db_data, vehicle_data, link
     x_range_offset = (ulog.last_timestamp - ulog.start_timestamp) * 0.05
     x_range = Range1d(ulog.start_timestamp - x_range_offset, ulog.last_timestamp + x_range_offset)
 
-
-    # magnetic field strength
-    data_plot = DataPlot(data, plot_config, magnetometer_ga_topic,
-                         y_axis_label='[gauss]', title='Raw Magnetic Field Strength',
-                         plot_height='small', changed_params=changed_params,
-                         x_range=x_range)
-    data_plot.add_graph(['magnetometer_ga[0]', 'magnetometer_ga[1]',
-                         'magnetometer_ga[2]'], colors3,
-                        ['X', 'Y', 'Z'])
-    if data_plot.finalize() is not None: plots.append(data_plot)
-
     # magnetic field norm
     data_plot = DataPlot(data, plot_config, magnetometer_ga_topic,
                          title='Norm Magnetic Field', plot_height='small',
@@ -117,8 +106,7 @@ def generate_plots(ulog, ulog2, px4_ulog, px4_ulog2, db_data, vehicle_data, link
         [lambda data: ('len_mag', np.sqrt(data['magnetometer_ga[0]']**2 +
                                           data['magnetometer_ga[1]']**2 +
                                           data['magnetometer_ga[2]']**2))],
-        colors3[0:1], ['Gascola'])
-    
+        colors3[0:1], ['#1'])
     data_plot = DataPlot(data2, plot_config, magnetometer_ga_topic,
                          title='Norm Magnetic Field', plot_height='small',
                          changed_params=changed_params, x_range=x_range, p=data_plot._p)
@@ -126,8 +114,7 @@ def generate_plots(ulog, ulog2, px4_ulog, px4_ulog2, db_data, vehicle_data, link
         [lambda data: ('len_mag', np.sqrt(data['magnetometer_ga[0]']**2 +
                                           data['magnetometer_ga[1]']**2 +
                                           data['magnetometer_ga[2]']**2))],
-        colors3[2:3], ["Bob's Farm"])
-    
+        colors3[2:3], ['#2'])
     if data_plot.finalize() is not None: plots.append(data_plot)
 
 
@@ -139,8 +126,15 @@ def generate_plots(ulog, ulog2, px4_ulog, px4_ulog2, db_data, vehicle_data, link
                          plot_height='small', changed_params=changed_params,
                          x_range=x_range)
     data_plot.add_graph(['eph', 'epv', 'satellites_used', 'fix_type'], colors8[::2],
-                        ['Horizontal position accuracy [m]', 'Vertical position accuracy [m]',
-                         'Num Satellites used', 'GPS Fix'])
+                        ['#1 Horizontal position accuracy [m]', '#1 Vertical position accuracy [m]',
+                         '#1 Num Satellites used', '#1 GPS Fix'])
+    data_plot = DataPlot(data2, plot_config, 'vehicle_gps_position',
+                         title='GPS Uncertainty', y_range=Range1d(0, 40),
+                         plot_height='small', changed_params=changed_params,
+                         x_range=x_range, p=data_plot._p)
+    data_plot.add_graph(['eph', 'epv', 'satellites_used', 'fix_type'], colors8_extra[::2],
+                        ['#2 Horizontal position accuracy [m]', '#2 Vertical position accuracy [m]',
+                         '#2 Num Satellites used', '#2 GPS Fix'])
     if data_plot.finalize() is not None: plots.append(data_plot)
 
 

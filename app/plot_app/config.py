@@ -70,6 +70,7 @@ colors3 = [plot_color_red, '#208900', plot_color_blue]
 colors2 = [colors3[0], colors3[1]] # for data to express: 'what it is' and 'what it should be'
 colors8 = [colors3[0], colors3[1], colors3[2], '#333333', '#999999', '#e58C33',
            '#33e5e5', '#e533e5']
+colors8_extra = ['#9a6f00', '#629c65', '#e0f20b', '#fe3f58', '#e29545', '#601672', '#adad43', '#96f3ef']
 color_gray = '#464646'
 
 plot_config['mission_setpoint_color'] = colors8[5]
