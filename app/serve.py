@@ -51,6 +51,9 @@ parser.add_argument('--use-xheaders', action='store_true',
 parser.add_argument('-f', '--file', metavar='file.ulg', action='store',
                     help='Directly show an ULog file, only for local use (implies -s)',
                     default=None)
+parser.add_argument('-f2', '--file2', metavar='file2.ulg', action='store',
+                    help='Directly show an ULog file, only for local use (implies -s)',
+                    default=None)
 parser.add_argument('--3d', dest='threed', action='store_true',
                     help='Open 3D page (only if --file is provided)')
 parser.add_argument('--pid-analysis', dest='pid_analysis', action='store_true',
@@ -102,6 +105,7 @@ show_3d_page = False
 show_pid_analysis_page = False
 if args.file is not None:
     ulog_file = os.path.abspath(args.file)
+    ulog_file2 = os.path.abspath(args.file2)
     show_ulog_file = True
     args.show = True
     show_3d_page = args.threed
@@ -150,7 +154,7 @@ if args.show:
             elif show_pid_analysis_page:
                 server.show('/plot_app?plots=pid_analysis&log='+ulog_file)
             else:
-                server.show('/plot_app?log='+ulog_file)
+                server.show('/plot_app?log='+ulog_file+'&log2='+ulog_file2)
         else:
             server.show('/upload')
     server.io_loop.add_callback(show_callback)

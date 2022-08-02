@@ -111,6 +111,19 @@ else:
         px4_ulog = PX4ULog(ulog)
         px4_ulog.add_roll_pitch_yaw()
 
+        if GET_arguments is not None and 'log2' in GET_arguments:
+            log_args = GET_arguments['log2']
+            if len(log_args) == 1:
+                log_id = str(log_args[0], 'utf-8')
+                if not validate_log_id(log_id):
+                    raise ValueError('Invalid log id: {}'.format(log_id))
+                print('GET[log]={}'.format(log_id))
+                ulog_file_name2 = get_log_filename(log_id)
+
+        ulog2 = load_ulog_file(ulog_file_name2)
+        px4_ulog2 = PX4ULog(ulog2)
+        px4_ulog2.add_roll_pitch_yaw()
+
     except ULogException:
         error_message = ('A parsing error occured when trying to read the file - '
                          'the log is most likely corrupt.')
@@ -230,7 +243,7 @@ else:
             link_to_pid_analysis_page = '?plots=pid_analysis&log='+log_id
 
             try:
-                plots = generate_plots(ulog, px4_ulog, db_data, vehicle_data,
+                plots = generate_plots(ulog, ulog2, px4_ulog, px4_ulog2, db_data, vehicle_data,
                                        link_to_3d_page, link_to_pid_analysis_page)
 
                 title = 'Flight Review - '+px4_ulog.get_mav_type()

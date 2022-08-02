@@ -1,3 +1,9 @@
+# Run
+```bash
+./app/serve.py -f /path_to_first_log -f2 /path_to_second_log
+```
+
+
 # Flight Review
 
 [![Build Status](https://travis-ci.org/PX4/flight_review.svg?branch=master)](https://travis-ci.org/PX4/flight_review)

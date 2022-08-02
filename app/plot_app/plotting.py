@@ -417,7 +417,7 @@ class DataPlot:
     def __init__(self, data, config, data_name, x_axis_label=None,
                  y_axis_label=None, title=None, plot_height='normal',
                  y_range=None, y_start=None, changed_params=None,
-                 topic_instance=0, x_range=None):
+                 topic_instance=0, x_range=None, p=None):
 
         self._had_error = False
         self._previous_success = False
@@ -430,9 +430,13 @@ class DataPlot:
         self._cur_dataset = None
         self._use_time_formatter = True
         try:
-            self._p = figure(title=title, x_axis_label=x_axis_label,
-                             y_axis_label=y_axis_label, tools=TOOLS,
-                             active_scroll=ACTIVE_SCROLL_TOOLS)
+            if (p == None):
+                self._p = figure(title=title, x_axis_label=x_axis_label,
+                                y_axis_label=y_axis_label, tools=TOOLS,
+                                active_scroll=ACTIVE_SCROLL_TOOLS)
+            else:
+                self._p = p
+
             if y_range is not None:
                 self._p.y_range = Range1d(y_range.start, y_range.end)
             if x_range is not None:
